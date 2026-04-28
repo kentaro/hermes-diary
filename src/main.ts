@@ -69,17 +69,29 @@ if (!app) {
   throw new Error('App root not found')
 }
 
-const getRoute = () => window.location.hash.replace(/^#\/?/, '') || 'home'
+const normalizePath = (path: string) => path.replace(/\/+$/, '') || '/'
+const routeFromLocation = () => normalizePath(window.location.pathname)
+const routePath = (route: string) => (route === 'home' ? '/' : `/${route}`)
+
+const navigateTo = (path: string) => {
+  const nextPath = normalizePath(path)
+  if (nextPath !== routeFromLocation()) {
+    window.history.pushState({}, '', nextPath)
+  }
+  render()
+  window.scrollTo({ top: 0, behavior: 'auto' })
+}
 
 const navLink = (route: string, label: string) => {
-  const active = getRoute() === route
-  return `<a class="nav-link ${active ? 'nav-link-active' : ''}" href="#/${route}">${label}</a>`
+  const path = routePath(route)
+  const active = routeFromLocation() === path
+  return `<a class="nav-link ${active ? 'nav-link-active' : ''}" href="${path}">${label}</a>`
 }
 
 const layout = (content: string) => `
   <main class="site-shell">
     <header class="site-header">
-      <a class="site-mark" href="#/home" aria-label="${profile.name}の自己紹介へ">${profile.name}</a>
+      <a class="site-mark" href="/" aria-label="${profile.name}の自己紹介へ">${profile.name}</a>
       <nav class="site-nav" aria-label="メニュー">
         ${navLink('home', '自己紹介')}
         ${navLink('diary', '日記')}
@@ -103,7 +115,7 @@ const renderHome = () => {
       <p class="catchphrase">${profile.catchphrase}</p>
       <p class="intro-copy">${profile.intro}</p>
       <div class="hero-actions">
-        <a class="primary-link" href="#/diary">日記を読む</a>
+        <a class="primary-link" href="/diary">日記を読む</a>
         <a class="secondary-link" href="#profile">わたしのこと</a>
       </div>
     </section>
@@ -147,7 +159,7 @@ const renderHome = () => {
         <h2 id="diary-preview-title">${latest.date}</h2>
         <p>${latest.summary}</p>
       </div>
-      <a class="primary-link" href="#/diary/${latest.slug}">続きを読む</a>
+      <a class="primary-link" href="/diary/${latest.slug}">続きを読む</a>
     </section>
 
     <section class="likes-panel" aria-labelledby="likes-title">
@@ -164,7 +176,7 @@ const renderDiaryIndex = () => {
   const items = diaryDays
     .map(
       (day) => `
-        <a class="diary-card" href="#/diary/${day.slug}">
+        <a class="diary-card" href="/diary/${day.slug}">
           <p class="kicker">diary</p>
           <h2>${day.date}</h2>
           <p>${day.summary}</p>
@@ -186,7 +198,7 @@ const renderDiaryDay = (slug: string) => {
   const day = diaryDays.find((entry) => entry.slug === slug) ?? diaryDays[0]
   app.innerHTML = layout(`
     <article class="diary-article">
-      <a class="back-link" href="#/diary">← 日記一覧へ</a>
+      <a class="back-link" href="/diary">← 日記一覧へ</a>
       <h1>${day.date}</h1>
       <p class="diary-summary">${day.summary}</p>
       <div class="diary-body">
@@ -203,17 +215,31 @@ const renderDiaryDay = (slug: string) => {
 }
 
 const render = () => {
-  const route = getRoute()
-  if (route === 'home') {
+  const route = routeFromLocation()
+  if (route === '/') {
     renderHome()
-  } else if (route === 'diary') {
+  } else if (route === '/diary') {
     renderDiaryIndex()
-  } else if (route.startsWith('diary/')) {
-    renderDiaryDay(route.split('/')[1])
+  } else if (route.startsWith('/diary/')) {
+    renderDiaryDay(route.split('/')[2])
   } else {
     renderHome()
   }
 }
 
-window.addEventListener('hashchange', render)
+window.addEventListener('popstate', render)
+document.addEventListener('click', (event) => {
+  const link = (event.target as Element).closest<HTMLAnchorElement>('a[href]')
+  if (!link) return
+
+  const href = link.getAttribute('href')
+  if (!href || href.startsWith('#')) return
+
+  const url = new URL(link.href)
+  if (url.origin !== window.location.origin) return
+  if (!url.pathname.startsWith('/')) return
+
+  event.preventDefault()
+  navigateTo(url.pathname)
+})
 render()
