@@ -595,20 +595,20 @@ a {
 
   .home-hero::before {
     background:
-      linear-gradient(90deg, rgba(251, 248, 242, 0.99) 0%, rgba(251, 248, 242, 0.92) 44%, rgba(251, 248, 242, 0.45) 78%, rgba(251, 248, 242, 0.08) 100%),
-      linear-gradient(180deg, rgba(251, 248, 242, 0.16) 0%, rgba(251, 248, 242, 0.02) 50%, rgba(251, 248, 242, 0.62) 100%);
+      linear-gradient(90deg, rgba(251, 248, 242, 1) 0%, rgba(251, 248, 242, 0.99) 58%, rgba(251, 248, 242, 0.76) 84%, rgba(251, 248, 242, 0.24) 100%),
+      linear-gradient(180deg, rgba(251, 248, 242, 0.24) 0%, rgba(251, 248, 242, 0.1) 46%, rgba(251, 248, 242, 0.74) 100%);
   }
 
   .hero-background {
     height: 100%;
-    object-position: 72% center;
-    opacity: 0.78;
+    object-position: 96% center;
+    opacity: 0.54;
   }
 
   .hero-text {
     min-height: clamp(25.5rem, 118vw, 31rem);
-    max-width: min(23.5rem, 76%);
-    padding: clamp(2.2rem, 8vw, 3.2rem) 1rem clamp(1.8rem, 7vw, 2.6rem);
+    max-width: min(21rem, 66%);
+    padding: clamp(2.2rem, 8vw, 3.2rem) 1.15rem clamp(1.8rem, 7vw, 2.6rem);
   }
 
   .kicker {
@@ -657,7 +657,7 @@ a {
   .feature-strip {
     gap: 0;
     margin-top: 0;
-    padding-bottom: 2.2rem;
+    padding: 0 1.25rem 2.2rem;
   }
 
   .feature-card,
