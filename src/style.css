@@ -148,7 +148,7 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center center;
+  object-position: 54% center;
   opacity: 1;
   filter: saturate(0.98) contrast(0.99) brightness(1.02);
 }
@@ -242,13 +242,22 @@ a {
   transform: translateY(-1px);
 }
 
+.feature-strip,
+.profile-panel,
+.diary-preview,
+.likes-panel {
+  width: min(100%, 1040px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .feature-strip {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(1.35rem, 3vw, 2.4rem);
   margin-top: 0;
   padding: 0 0 clamp(2.5rem, 5vw, 4rem);
-  border-bottom: 1px solid rgba(69, 58, 46, 0.12);
+  border-bottom: 1px solid rgba(69, 58, 46, 0.095);
 }
 
 .feature-card,
@@ -269,7 +278,7 @@ a {
 }
 
 .feature-card + .feature-card {
-  border-left: 1px solid rgba(69, 58, 46, 0.1);
+  border-left: 1px solid rgba(69, 58, 46, 0.085);
   padding-left: clamp(1.35rem, 3vw, 2.4rem);
 }
 
@@ -292,8 +301,8 @@ a {
 .diary-preview,
 .likes-panel {
   margin-top: clamp(2.6rem, 6vw, 4.8rem);
-  border-radius: clamp(28px, 4vw, 44px);
-  padding: clamp(2rem, 4.8vw, 3.6rem);
+  border-radius: 0;
+  padding: clamp(2.6rem, 5vw, 4rem) 0;
 }
 
 .profile-panel {
@@ -301,9 +310,9 @@ a {
   grid-template-columns: minmax(14rem, 0.78fr) minmax(0, 1fr);
   gap: clamp(2rem, 5vw, 4.5rem);
   align-items: start;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.1)),
-    rgba(244, 239, 230, 0.58);
+  border-top: 1px solid rgba(69, 58, 46, 0.095);
+  border-bottom: 1px solid rgba(69, 58, 46, 0.095);
+  background: transparent;
 }
 
 .section-copy h2,
@@ -364,8 +373,8 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 2rem;
-  border-top: 1px solid rgba(69, 58, 46, 0.12);
-  border-bottom: 1px solid rgba(69, 58, 46, 0.12);
+  border-top: 1px solid rgba(69, 58, 46, 0.095);
+  border-bottom: 1px solid rgba(69, 58, 46, 0.095);
   border-radius: 0;
   padding-right: 0;
   padding-left: 0;
@@ -377,7 +386,9 @@ a {
 
 .likes-panel {
   margin-top: clamp(2.1rem, 5vw, 3.4rem);
-  background: rgba(255, 255, 255, 0.24);
+  border-top: 1px solid rgba(69, 58, 46, 0.095);
+  border-bottom: 1px solid rgba(69, 58, 46, 0.095);
+  background: transparent;
 }
 
 .likes-list {
@@ -390,7 +401,7 @@ a {
 .likes-list span {
   border: 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.42);
+  background: rgba(237, 229, 216, 0.42);
   color: #62594f;
   padding: 0.56rem 0.86rem;
   font-size: 0.92rem;
@@ -473,7 +484,7 @@ a {
 
 .diary-language + .diary-language {
   padding-top: clamp(3rem, 7vw, 4.8rem);
-  border-top: 1px solid rgba(69, 58, 46, 0.12);
+  border-top: 1px solid rgba(69, 58, 46, 0.095);
 }
 
 .diary-language-heading {
@@ -551,7 +562,7 @@ a {
   }
 
   .home-hero {
-    min-height: 100svh;
+    min-height: min(100svh, 48rem);
     margin-top: -4.25rem;
     margin-bottom: clamp(2.3rem, 8vw, 3.8rem);
   }
@@ -564,12 +575,12 @@ a {
 
   .hero-background {
     height: 100%;
-    object-position: center center;
+    object-position: 54% center;
   }
 
   .hero-text {
     width: min(100% - 1.35rem, 1120px);
-    min-height: 100svh;
+    min-height: min(100svh, 48rem);
     max-width: min(30rem, 72%);
     justify-content: center;
     padding: clamp(7rem, 16vw, 8.5rem) 0 clamp(2.4rem, 7vw, 3.8rem);
@@ -637,7 +648,7 @@ a {
   }
 
   .home-hero {
-    min-height: 100svh;
+    min-height: min(100svh, 43rem);
     margin-top: -4rem;
     margin-right: calc(50% - 50vw);
     margin-left: calc(50% - 50vw);
@@ -652,13 +663,13 @@ a {
 
   .hero-background {
     height: 100%;
-    object-position: 67% center;
+    object-position: 60% center;
     opacity: 1;
   }
 
   .hero-text {
     width: calc(100% - 2.5rem);
-    min-height: 100svh;
+    min-height: min(100svh, 43rem);
     max-width: min(23.5rem, 76%);
     padding: clamp(6.8rem, 24vw, 8rem) 0 clamp(1.8rem, 7vw, 2.6rem);
   }
@@ -711,9 +722,6 @@ a {
   }
 
   .feature-card,
-  .profile-panel,
-  .diary-preview,
-  .likes-panel,
   .diary-card,
   .diary-notes {
     border-radius: 22px;
@@ -725,7 +733,7 @@ a {
   }
 
   .feature-card + .feature-card {
-    border-top: 1px solid rgba(69, 58, 46, 0.1);
+    border-top: 1px solid rgba(69, 58, 46, 0.085);
     border-left: 0;
     padding-left: 0;
   }
@@ -743,7 +751,7 @@ a {
   .profile-panel,
   .diary-preview,
   .likes-panel {
-    padding: 1.25rem;
+    padding: 1.8rem 0;
   }
 
   .section-copy h2,
