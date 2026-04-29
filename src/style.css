@@ -460,8 +460,37 @@ a {
   line-height: 1.85;
 }
 
+.diary-language-list {
+  display: grid;
+  gap: clamp(4rem, 8vw, 6rem);
+  margin-top: clamp(2.8rem, 7vw, 4.8rem);
+}
+
+.diary-language + .diary-language {
+  padding-top: clamp(3rem, 7vw, 4.8rem);
+  border-top: 1px solid rgba(69, 58, 46, 0.12);
+}
+
+.diary-language-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.diary-language-heading .kicker {
+  margin: 0;
+}
+
+.diary-language-heading h2 {
+  margin: 0;
+  color: #211c17;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 680;
+  letter-spacing: -0.04em;
+}
+
 .diary-body {
-  margin-top: 3.5rem;
+  margin-top: 3rem;
   color: #403930;
   font-size: 1.1rem;
   line-height: 2.05;
@@ -481,7 +510,8 @@ a {
   border-top: 1px solid rgba(91, 75, 57, 0.16);
 }
 
-.diary-notes h2 {
+.diary-notes h2,
+.diary-notes h3 {
   margin: 0;
   color: #211c17;
   font-size: 1.2rem;
@@ -737,7 +767,7 @@ a {
 
   .page-heading h1,
   .diary-article h1 {
-    font-size: clamp(2.8rem, 13vw, 4rem);
+    font-size: clamp(2.45rem, 10.8vw, 3.35rem);
   }
 
   .diary-body {

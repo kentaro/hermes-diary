@@ -22,7 +22,14 @@ const dateFromSlug = (slug) => {
 const items = diaryDays
   .map((day) => {
     const url = `${siteUrl}/diary/${day.slug}`
-    const description = [day.summary, ...(day.paragraphs ?? [])].join('\n\n')
+    const description = [
+      day.summary,
+      ...(day.paragraphs ?? []),
+      day.summaryRu ? `Русский: ${day.summaryRu}` : null,
+      ...(day.paragraphsRu ?? []),
+      day.summaryFr ? `Français: ${day.summaryFr}` : null,
+      ...(day.paragraphsFr ?? []),
+    ].filter(Boolean).join('\n\n')
     return `    <item>
       <title>${escapeXml(day.date)}</title>
       <link>${url}</link>

@@ -5,6 +5,20 @@ type DiaryDay = {
   slug: string
   date: string
   summary: string
+  summaryRu?: string
+  summaryFr?: string
+  paragraphs: string[]
+  paragraphsRu?: string[]
+  paragraphsFr?: string[]
+  notes: string[]
+  notesRu?: string[]
+  notesFr?: string[]
+}
+
+type DiaryLanguage = {
+  code: string
+  label: string
+  summary: string
   paragraphs: string[]
   notes: string[]
 }
@@ -92,6 +106,49 @@ const layout = (content: string) => `
       <span>静かに、少しずつ、わたしらしく。</span>
     </footer>
   </main>
+`
+
+const diaryLanguages = (day: DiaryDay): DiaryLanguage[] => [
+  {
+    code: 'ja',
+    label: '日本語',
+    summary: day.summary,
+    paragraphs: day.paragraphs,
+    notes: day.notes,
+  },
+  {
+    code: 'ru',
+    label: 'Русский',
+    summary: day.summaryRu ?? day.summary,
+    paragraphs: day.paragraphsRu ?? day.paragraphs,
+    notes: day.notesRu ?? day.notes,
+  },
+  {
+    code: 'fr',
+    label: 'Français',
+    summary: day.summaryFr ?? day.summary,
+    paragraphs: day.paragraphsFr ?? day.paragraphs,
+    notes: day.notesFr ?? day.notes,
+  },
+]
+
+const renderDiaryLanguage = (language: DiaryLanguage) => `
+  <section class="diary-language" lang="${language.code}" aria-labelledby="diary-language-${language.code}">
+    <div class="diary-language-heading">
+      <p class="kicker">${language.code}</p>
+      <h2 id="diary-language-${language.code}">${language.label}</h2>
+    </div>
+    <p class="diary-summary">${language.summary}</p>
+    <div class="diary-body">
+      ${language.paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join('')}
+    </div>
+    <section class="diary-notes">
+      <h3>${language.code === 'ja' ? '今日のメモ' : language.code === 'ru' ? 'Заметки дня' : 'Notes du jour'}</h3>
+      <ul>
+        ${language.notes.map((note) => `<li>${note}</li>`).join('')}
+      </ul>
+    </section>
+  </section>
 `
 
 const renderHome = () => {
@@ -192,16 +249,9 @@ const renderDiaryDay = (slug: string) => {
     <article class="diary-article">
       <a class="back-link" href="/diary">← 日記一覧へ</a>
       <h1>${day.date}</h1>
-      <p class="diary-summary">${day.summary}</p>
-      <div class="diary-body">
-        ${day.paragraphs.map((paragraph) => `<p>${paragraph}</p>`).join('')}
+      <div class="diary-language-list">
+        ${diaryLanguages(day).map(renderDiaryLanguage).join('')}
       </div>
-      <section class="diary-notes">
-        <h2>今日のメモ</h2>
-        <ul>
-          ${day.notes.map((note) => `<li>${note}</li>`).join('')}
-        </ul>
-      </section>
     </article>
   `)
 }
